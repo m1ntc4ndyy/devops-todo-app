@@ -15,26 +15,26 @@ pipeline {
     }
 
     stages {
-        stage("build and test") {
+        stage("build") {
             steps {
-              sh 'ls -l'
               sh 'docker build -t m1ntc4ndy/todo-app'
             }
         }
         stage("Docker login and push docker image") {
             steps {
-                withBuildConfiguration {
-                    // TODO here
-                    
+                withCredentials([usernamePassword(credentialsId:'v-docker-hub',usernameVariable: 'USER', passwordVariable: 'PASSWD' )]) {
+                    sh 'docker login -u "$USER' -p "$PASSWD"
+                    sh 'docker push m1ntc4ndy/todo-app'
                 }
-            }
+            }   
         }
-        stage("deploy") {
+        stage("deploy to EC2") {
             steps {
                 withBuildConfiguration {
                     sshagent(credentials: [SSH_ID_REF]) {
                         sh '''
-                            // TODO here
+                            docker run -d --rm --name todo-app -p 8000:8000 m1ntc4ndy/todo-app
+                            docker ps
                         '''
                     }
                 }
