@@ -10,15 +10,11 @@ pipeline {
     tools {dockerTool 'docker'}
 
     stages {
-        stage('Docker build') {
-            steps {
-                sh 'docker build -t m1ntc4ndy/todo-app .'
-            }
-        }
 
-        stage('Push to DockerHub') {
+        stage(' Build and Push to DockerHub ') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'v-docker-hub', usernameVariable: 'USER', passwordVariable: 'PASSWD')]) {
+                    sh 'docker build -t "$USER"/todo-app'
                     sh 'docker login -u "$USER" -p "$PASSWD"'
                     sh 'docker push "$USER"/todo-app'
                 }
