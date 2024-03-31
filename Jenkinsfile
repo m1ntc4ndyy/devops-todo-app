@@ -23,7 +23,7 @@ pipeline {
         stage("Docker login and push docker image") {
             steps {
                 withCredentials([usernamePassword(credentialsId:'v-docker-hub',usernameVariable: 'USER', passwordVariable: 'PASSWD' )]) {
-                    sh 'docker login -u "$USER' -p "$PASSWD"
+                    sh 'docker login -u "$USER" -p "$PASSWD"'
                     sh 'docker push m1ntc4ndy/todo-app'
                 }
             }   
