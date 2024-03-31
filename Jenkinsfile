@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage("build") {
             steps {
-              sh 'docker build -t m1ntc4ndy/todo-app'
+              sh 'docker build -t m1ntc4ndy/todo-app .'
             }
         }
         stage("Docker login and push docker image") {
