@@ -47,3 +47,4 @@ void withBuildConfiguration(Closure body) {
     withCredentials([usernamePassword(credentialsId: DOCKER_USER_REF, usernameVariable: 'repository_username', passwordVariable: 'repository_password')]) {
         body()
     }
+}
