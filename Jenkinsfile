@@ -10,28 +10,27 @@ pipeline {
     tools {dockerTool 'docker'}
 
     stages {
-        stage('Build and Test') {
-            steps {
-                sh 'docker build -t todo-app .'
-                sh 'docker images'
-            }
-        }
-        stage('Push to DockerHub ') {
-            steps {
-                withBuildConfiguration {
-                    sh 'docker login -u "$USER" -p "$PASSWD"'
-                    sh 'docker tag todo-app "$USER"/todo-app'
-                    sh 'docker push "$USER"/todo-app'
-                }
-            }
-        }
+        // stage('Build and Test') {
+        //     steps {
+        //         sh 'docker build -t todo-app .'
+        //         sh 'docker images'
+        //     }
+        // }
+        // stage('Push to DockerHub ') {
+        //     steps {
+        //         withBuildConfiguration {
+        //             sh 'docker login -u "$USER" -p "$PASSWD"'
+        //             sh 'docker tag todo-app "$USER"/todo-app'
+        //             sh 'docker push "$USER"/todo-app'
+        //         }
+        //     }
+        // }
 
         stage('Pull docker to EC2') {
             steps {
                 withBuildConfiguration {
                     sshagent(credentials: [SSH_ID_REF]) {
-                        sh '''
-                            docker run -d --rm --name todo-app -p 8000:8000 "$USER"/todo-app
+                        sh ''' 
                             docker ps
                         '''
                     }
