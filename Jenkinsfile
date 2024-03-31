@@ -26,16 +26,18 @@ pipeline {
             }
         }
 
-        // stage('Pull docker to EC2') {
-        //     steps {
-        //         sshagent(credentials: [SSH_ID_REF]) {
-        //             sh '''
-        //                 docker run -d --rm --name todo-app -p 8000:8000 m1ntc4ndy/todo-app
-        //                 docker ps
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Pull docker to EC2') {
+            steps {
+                withBuildConfiguration {
+                    sshagent(credentials: [SSH_ID_REF]) {
+                        sh '''
+                            docker run -d --rm --name todo-app -p 8000:8000 "$USER"/todo-app
+                            docker ps
+                        '''
+                    }
+                }
+            }
+        }
     }
 }
 
