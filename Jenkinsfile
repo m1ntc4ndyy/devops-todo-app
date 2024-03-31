@@ -31,6 +31,7 @@ pipeline {
                 withBuildConfiguration {
                     sshagent(credentials: [SSH_ID_REF]) {
                         sh ''' 
+                            docker containter ls
                             docker ps
                         '''
                     }
