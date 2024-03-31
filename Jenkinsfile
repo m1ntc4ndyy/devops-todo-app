@@ -12,16 +12,16 @@ pipeline {
     stages {
         stage('Docker build') {
             steps {
-                sh 'docker build -t m1ntc4ndy/todo-app .'
+                sh 'docker build -t todo-app .'
             }
         }
 
         stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'v-docker-hub', usernameVariable: 'USER', passwordVariable: 'PASSWD')]) {
-                    sh 'docker logout'
                     sh 'docker login -u "$USER" -p "$PASSWD"'
-                    sh 'docker push m1ntc4ndy/todo-app'
+                    sh 'docker tag todo-app "&USER"/todo-app'
+                    sh 'docker push "&USER"/todo-app'
                 }
             }
         }
