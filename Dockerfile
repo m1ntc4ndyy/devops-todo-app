@@ -1,5 +1,5 @@
 FROM node:20.11-alpine
-WORKDIR app
+WORKDIR /app
 COPY . .
 RUN npm install
 RUN npm run test
