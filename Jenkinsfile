@@ -31,7 +31,7 @@ pipeline {
                 withBuildConfiguration {
                     sshagent(credentials: [SSH_ID_REF]) {
                         sh ''' 
-                            docker run -d --rm -name mgm-todoApp -p 127.0.0.1:3000:8000 "$USER"/mgm-todoapp
+                            docker run -d --rm -name mgm-todoapp -p 127.0.0.1:3000:8000 "$USER"/mgm-todoapp
                             docker ps
                         '''
                     }
